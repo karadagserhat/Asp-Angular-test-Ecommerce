@@ -1,83 +1,74 @@
+using ECommerceBackend.Application.Features.Commands.Product.CreateProduct;
+using ECommerceBackend.Application.Features.Commands.Product.RemoveProduct;
+using ECommerceBackend.Application.Features.Commands.Product.UpdateProduct;
+using ECommerceBackend.Application.Features.Queries.Product.GetAllProducts;
+using ECommerceBackend.Application.Features.Queries.Product.GetByIdProduct;
+using ECommerceBackend.Application.Features.Queries.Product.GetProductsBrands;
+using ECommerceBackend.Application.Features.Queries.Product.GetProductsTypes;
 using ECommerceBackend.Application.Repositories;
 using ECommerceBackend.Domain.Entities;
-using ECommerceBackend.Persistence.Contexts;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ECommerceBackend.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ProductsController(ECommerceBackendDbContext context, IProductWriteRepository productWriteRepository, IProductReadRepository productReadRepository) : ControllerBase
+public class ProductsController(IProductWriteRepository productWriteRepository, IProductReadRepository productReadRepository, IMediator mediator) : ControllerBase
 {
-  private readonly ECommerceBackendDbContext context = context;
   private readonly IProductWriteRepository _productWriteRepository = productWriteRepository;
   private readonly IProductReadRepository _productReadRepository = productReadRepository;
+  readonly IMediator _mediator = mediator;
 
   [HttpGet]
-  public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+  public async Task<ActionResult<IEnumerable<Product>>> GetProducts([FromQuery] GetAllProductQueryRequest getAllProductQueryRequest)
   {
-    var products = await _productReadRepository.GetAll().ToListAsync();
-    return Ok(products);
+    GetAllProductQueryResponse response = await _mediator.Send(getAllProductQueryRequest);
+    return Ok(response);
+  }
+
+  [HttpGet("{id:int}")]
+  public async Task<ActionResult<Product>> GetProduct([FromRoute] GetByIdProductQueryRequest getByIdProductQueryRequest)
+  {
+    GetByIdProductQueryResponse response = await _mediator.Send(getByIdProductQueryRequest);
+    return Ok(response);
 
   }
 
-  [HttpGet("{id:int}")] // api/products/2
-  public async Task<ActionResult<Product>> GetProduct(int id)
-  {
-    var product = await _productReadRepository.GetByIdAsync(id);
-    if (product == null) return NotFound();
-    return product;
-  }
   [HttpPost]
-  public async Task<ActionResult<Product>> CreateProduct(Product product)
+  public async Task<ActionResult<Product>> CreateProduct([FromBody] CreateProductCommandRequest createProductCommandRequest)
   {
-    await _productWriteRepository.AddAsync(product);
-    await _productWriteRepository.SaveAsync();
-    return product;
+    CreateProductCommandResponse response = await _mediator.Send(createProductCommandRequest);
+    return Ok(response);
   }
+
   [HttpPut("{id:int}")]
-  public async Task<ActionResult> UpdateProduct(int id, Product product)
+  public async Task<ActionResult> UpdateProduct([FromBody] UpdateProductCommandRequest updateProductCommandRequest)
   {
-    if (product.Id != id || !ProductExists(id))
-      return BadRequest("Cannot update this product");
-
-    _productWriteRepository.Update(product);
-    await _productWriteRepository.SaveAsync();
-    return NoContent();
+    UpdateProductCommandResponse response = await _mediator.Send(updateProductCommandRequest);
+    return Ok();
   }
+
   [HttpDelete("{id:int}")]
-  public async Task<ActionResult> DeleteProduct(int id)
+  public async Task<ActionResult> DeleteProduct([FromRoute] RemoveProductCommandRequest removeProductCommandRequest)
   {
-    var product = await _productReadRepository.GetByIdAsync(id);
-    if (product == null) return NotFound();
-
-    await _productWriteRepository.RemoveAsync(id);
-    await _productWriteRepository.SaveAsync();
-
-    return NoContent();
+    RemoveProductCommandResponse response = await _mediator.Send(removeProductCommandRequest);
+    return Ok();
   }
 
   [HttpGet("brands")]
   public async Task<ActionResult<IReadOnlyList<string>>> GetBrands()
   {
-    var brands = await _productReadRepository.GetSelect(x => x.Brand)
-                          .Distinct()
-                          .ToListAsync();
-
-    return Ok(brands);
+    GetProductsBrandsQueryResponse response = await _mediator.Send(new GetProductsBrandsQueryRequest());
+    return Ok(response);
 
   }
 
 
-  // [HttpGet("types")]
-  // public async Task<ActionResult<IReadOnlyList<string>>> GetTypes()
-  // {
-  //   return Ok(await repo.GetTypesAsync());
-  // }
-
-  private bool ProductExists(int id)
+  [HttpGet("types")]
+  public async Task<ActionResult<IReadOnlyList<string>>> GetTypes()
   {
-    return _productReadRepository.GetWhere(x => x.Id == id).Any();
+    GetProductsTypesQueryResponse response = await _mediator.Send(new GetProductsTypesQueryRequest());
+    return Ok(response);
   }
 }

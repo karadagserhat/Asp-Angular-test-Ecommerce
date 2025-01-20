@@ -43,7 +43,8 @@ namespace ECommerceBackend.Persistence.Repositories
 
         public async Task<bool> RemoveAsync(int id)
         {
-            T model = await Table.FirstOrDefaultAsync(data => data.Id == id);
+            T? model = await Table.FirstOrDefaultAsync(data => data.Id == id);
+            if (model == null) return false;
             return Remove(model);
         }
 

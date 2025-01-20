@@ -17,7 +17,7 @@ namespace ECommerceBackend.Persistence
                 configurationManager.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../../Presentation/ECommerceBackend.API"));
                 configurationManager.AddJsonFile("appsettings.json");
 
-                return configurationManager.GetConnectionString("DefaultConnection");
+                return configurationManager.GetConnectionString("DefaultConnection")!;
             }
         }
     }

@@ -15,17 +15,5 @@ namespace ECommerceBackend.Persistence.Repositories
         public ProductReadRepository(ECommerceBackendDbContext context) : base(context)
         {
         }
-
-        //    public async Task<IReadOnlyList<string>> GetBrandsAsync()
-        //     {
-        //         return await context.Products.Select(x => x.Brand)
-        //             .Distinct()
-        //             .ToListAsync();
-        //     }
-
-        //         public Task<IReadOnlyList<string>> GetTypesAsync()
-        //         {
-        //             throw new NotImplementedException();
-        //         }
     }
 }
