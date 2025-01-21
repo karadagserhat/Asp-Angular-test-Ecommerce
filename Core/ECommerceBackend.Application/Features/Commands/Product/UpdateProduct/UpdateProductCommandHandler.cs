@@ -1,4 +1,5 @@
-﻿using ECommerceBackend.Application.Repositories;
+﻿using ECommerceBackend.Application.Exceptions;
+using ECommerceBackend.Application.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -11,7 +12,7 @@ namespace ECommerceBackend.Application.Features.Commands.Product.UpdateProduct
 
         public async Task<UpdateProductCommandResponse> Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Product product = await _productReadRepository.GetByIdAsync(request.Id);
+            Domain.Entities.Product? product = await _productReadRepository.GetByIdAsync(request.Id) ?? throw new ProductUpdateFailedException();
 
             product.Name = request.Name;
             product.Price = request.Price;

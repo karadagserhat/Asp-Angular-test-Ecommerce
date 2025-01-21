@@ -1,1 +1,91 @@
-/* You can add global styles to this file, and also import other style files */
+@use "@angular/material" as mat;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@include mat.core();
+
+body {
+  font-family: "Josefin Sans", sans-serif;
+}
+
+// Light theme
+$light-primary: mat.m2-define-palette(mat.$m2-blue-palette, A400, A100, A700);
+$light-accent: mat.m2-define-palette(mat.$m2-amber-palette, A200, A100, A400);
+$light-warn: mat.m2-define-palette(mat.$m2-red-palette, 500, 300, 700);
+$light-background: mat.m2-define-palette(
+  mat.$m2-light-blue-palette,
+  50,
+  100,
+  200
+);
+
+$lightTheme: mat.m2-define-light-theme(
+  (
+    color: (
+      primary: $light-primary,
+      accent: $light-accent,
+      warn: $light-warn,
+    ),
+    background: $light-background,
+  )
+);
+
+// Dark theme
+$dark-primary: mat.m2-define-palette(mat.$m2-blue-grey-palette, 100, 400, 800);
+$dark-accent: mat.m2-define-palette(mat.$m2-cyan-palette, A400, A200, A700);
+$dark-warn: mat.m2-define-palette(mat.$m2-deep-orange-palette, 600, 400, 800);
+$dark-background: mat.m2-define-palette(
+  mat.$m2-blue-grey-palette,
+  900,
+  800,
+  700
+);
+
+$darkTheme: mat.m2-define-dark-theme(
+  (
+    color: (
+      primary: $dark-primary,
+      accent: $dark-accent,
+      warn: $dark-warn,
+    ),
+    background: $dark-background,
+  )
+);
+
+.light-theme {
+  @include mat.all-component-themes($lightTheme);
+
+  body {
+    background-color: mat.m2-get-color-from-palette($light-background, default);
+    color: mat.m2-get-color-from-palette($light-primary, 800);
+  }
+}
+
+.dark-theme {
+  @include mat.all-component-colors($darkTheme);
+
+  body {
+    background-color: mat.m2-get-color-from-palette($dark-background, default);
+    color: mat.m2-get-color-from-palette($dark-primary, 100);
+  }
+}
+
+.mdc-button,
+.mdc-raised-button,
+.mdc-stroked-button,
+.mdc-flat-button {
+  @apply rounded-md;
+}
+
+.container {
+  @apply mx-auto max-w-screen-2xl;
+}
+
+.text-primary {
+  color: #7d00fa;
+}
+button.match-input-height {
+  height: var(--mat-form-field-container-height) !important;
+}

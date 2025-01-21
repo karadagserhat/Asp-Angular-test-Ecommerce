@@ -1,4 +1,5 @@
-﻿using ECommerceBackend.Application.Repositories;
+﻿using ECommerceBackend.Application.Exceptions;
+using ECommerceBackend.Application.Repositories;
 using MediatR;
 using P = ECommerceBackend.Domain.Entities;
 
@@ -11,7 +12,7 @@ namespace ECommerceBackend.Application.Features.Queries.Product.GetByIdProduct
 
         public async Task<GetByIdProductQueryResponse> Handle(GetByIdProductQueryRequest request, CancellationToken cancellationToken)
         {
-            P.Product product = await _productReadRepository.GetByIdAsync(request.Id, false);
+            P.Product? product = await _productReadRepository.GetByIdAsync(request.Id, false) ?? throw new ProductGetFailedException();
 
             return new()
             {

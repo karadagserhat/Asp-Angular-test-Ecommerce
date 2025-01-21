@@ -1,0 +1,41 @@
+.custom-badge .mat-badge-content {
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+  line-height: 24px;
+}
+.custom-badge .mat-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+}
+
+.swap-on {
+  display: none;
+}
+
+.swap-off {
+  display: block;
+}
+
+input:checked {
+  & + .swap-off {
+    display: none;
+  }
+
+  & ~ .swap-on {
+    display: block;
+  }
+}
+
+button {
+  font-family: "Josefin Sans", sans-serif;
+  margin-top: 0; // Eğer margin top varsa, sıfırlayın
+  padding: 10px 20px; // Butonlara uygun padding ekleyin
+}
+
+header .flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

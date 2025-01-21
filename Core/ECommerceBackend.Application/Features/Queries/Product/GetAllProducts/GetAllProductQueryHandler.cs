@@ -1,4 +1,5 @@
-﻿using ECommerceBackend.Application.Repositories;
+﻿using System.Runtime.CompilerServices;
+using ECommerceBackend.Application.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -13,6 +14,8 @@ namespace ECommerceBackend.Application.Features.Queries.Product.GetAllProducts
         {
             var query = _productReadRepository.GetAll().AsQueryable();
 
+            if (!string.IsNullOrEmpty(request.Search))
+                query = query.Where(x => x.Name.Contains(request.Search));
 
             if (request.Brands.Count != 0)
                 query = query.Where(x => request.Brands.Contains(x.Brand));
@@ -20,8 +23,10 @@ namespace ECommerceBackend.Application.Features.Queries.Product.GetAllProducts
             if (request.Types.Count != 0)
                 query = query.Where(x => request.Types.Contains(x.Type));
 
-            query = query.Skip(request.PageSize * (request.PageIndex - 1)).Take(request.PageSize);
             var count = await query.CountAsync(cancellationToken);
+
+
+            query = query.Skip(request.PageSize * (request.PageIndex - 1)).Take(request.PageSize);
 
             query = request.Sort switch
             {
@@ -34,7 +39,7 @@ namespace ECommerceBackend.Application.Features.Queries.Product.GetAllProducts
 
             return new()
             {
-                Products = products,
+                Data = products,
                 PageIndex = request.PageIndex,
                 PageSize = request.PageSize,
                 Count = count
