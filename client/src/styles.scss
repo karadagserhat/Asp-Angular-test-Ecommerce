@@ -108,6 +108,11 @@ $darkTheme: mat.m2-define-dark-theme(
       default
     ) !important;
   }
+
+  .mat-mdc-paginator-range-label,
+  .mat-mdc-paginator-page-size {
+    color: mat.m2-get-color-from-palette($dark-primary, 200);
+  }
 }
 
 .mdc-button,
