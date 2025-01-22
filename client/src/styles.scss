@@ -59,7 +59,26 @@ $darkTheme: mat.m2-define-dark-theme(
 
   body {
     background-color: mat.m2-get-color-from-palette($light-background, default);
-    color: mat.m2-get-color-from-palette($light-primary, 800);
+    color: mat.m2-get-color-from-palette($light-primary, 600);
+  }
+
+  a {
+    &.active {
+      color: mat.m2-get-color-from-palette($light-primary, 900);
+    }
+  }
+
+  input,
+  textarea,
+  mat-paginator,
+  mat-card,
+  mat-card-content,
+  mat-card-actions,
+  mat-form-field .mat-input-element {
+    background-color: mat.m2-get-color-from-palette(
+      $light-background,
+      default
+    ) !important;
   }
 }
 
@@ -68,7 +87,26 @@ $darkTheme: mat.m2-define-dark-theme(
 
   body {
     background-color: mat.m2-get-color-from-palette($dark-background, default);
-    color: mat.m2-get-color-from-palette($dark-primary, 100);
+    color: mat.m2-get-color-from-palette($dark-primary, 200);
+  }
+
+  a {
+    &.active {
+      color: mat.m2-get-color-from-palette($dark-accent, 200);
+    }
+  }
+
+  input,
+  textarea,
+  mat-paginator,
+  mat-card,
+  mat-card-content,
+  mat-card-actions,
+  mat-form-field .mat-input-element {
+    background-color: mat.m2-get-color-from-palette(
+      $dark-background,
+      default
+    ) !important;
   }
 }
 
@@ -83,9 +121,21 @@ $darkTheme: mat.m2-define-dark-theme(
   @apply mx-auto max-w-screen-2xl;
 }
 
-.text-primary {
-  color: #7d00fa;
-}
 button.match-input-height {
   height: var(--mat-form-field-container-height) !important;
+}
+
+.mdc-notched-outline__notch {
+  border-right-style: none !important;
+}
+
+.mat-mdc-snack-bar-container.snack-error {
+  --mdc-snackbar-container-color: red;
+  --mat-snack-bar-button-color: #fff;
+  --mdc-snackbar-supporting-text-color: #fff;
+}
+.mat-mdc-snack-bar-container.snack-success {
+  --mdc-snackbar-container-color: green;
+  --mat-snack-bar-button-color: #fff;
+  --mdc-snackbar-supporting-text-color: #fff;
 }

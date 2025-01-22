@@ -43,6 +43,7 @@ export class FiltersDialogComponent implements OnInit {
       },
     });
   }
+
   applyFilters() {
     this.dialogRef.close({
       selectedBrands: this.selectedBrands,

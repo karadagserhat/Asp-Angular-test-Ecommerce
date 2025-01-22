@@ -79,9 +79,6 @@ export class ShopComponent {
     }
   }
   openFiltersDialog() {
-    console.log(this.shopParams.brands);
-    console.log(this.shopParams.types);
-
     const dialogRef = this.dialogService.open(FiltersDialogComponent, {
       minWidth: '500px',
       data: {
