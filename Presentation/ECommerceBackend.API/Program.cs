@@ -1,3 +1,4 @@
+using ECommerceAPI.Infrastructure;
 using ECommerceBackend.Application;
 using ECommerceBackend.Persistence;
 using ECommerceBackend.Persistence.Contexts;
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddPersistenceServices();
 builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices();
 
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
     policy.WithOrigins("http://localhost:4200", "https://localhost:4200").AllowAnyHeader().AllowAnyMethod()

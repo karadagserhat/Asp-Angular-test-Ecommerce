@@ -1,4 +1,3 @@
-using System;
 using ECommerceBackend.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

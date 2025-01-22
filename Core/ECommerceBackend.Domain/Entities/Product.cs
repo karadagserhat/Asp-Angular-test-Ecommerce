@@ -1,4 +1,3 @@
-using System;
 using ECommerceBackend.Domain.Entities.Common;
 
 namespace ECommerceBackend.Domain.Entities;

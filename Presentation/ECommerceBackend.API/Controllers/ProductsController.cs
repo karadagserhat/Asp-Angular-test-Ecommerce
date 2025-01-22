@@ -14,10 +14,8 @@ namespace ECommerceBackend.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ProductsController(IProductWriteRepository productWriteRepository, IProductReadRepository productReadRepository, IMediator mediator) : ControllerBase
+public class ProductsController(IMediator mediator) : ControllerBase
 {
-  private readonly IProductWriteRepository _productWriteRepository = productWriteRepository;
-  private readonly IProductReadRepository _productReadRepository = productReadRepository;
   readonly IMediator _mediator = mediator;
 
   [HttpGet]
