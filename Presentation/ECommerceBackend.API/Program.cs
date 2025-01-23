@@ -1,5 +1,6 @@
 using ECommerceAPI.Infrastructure;
 using ECommerceBackend.Application;
+using ECommerceBackend.Domain.Entities;
 using ECommerceBackend.Persistence;
 using ECommerceBackend.Persistence.Contexts;
 using Infrastructure.Data;
@@ -13,10 +14,14 @@ builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
 
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
-    policy.WithOrigins("http://localhost:4200", "https://localhost:4200").AllowAnyHeader().AllowAnyMethod()
+    policy.WithOrigins("http://localhost:4200", "https://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowCredentials()
 ));
 
 builder.Services.AddControllers();
+
+builder.Services.AddAuthorization();
+builder.Services.AddIdentityApiEndpoints<AppUser>()
+    .AddEntityFrameworkStores<ECommerceBackendDbContext>();
 
 var app = builder.Build();
 
@@ -26,6 +31,7 @@ app.UseCors();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGroup("api").MapIdentityApi<AppUser>(); // api/login
 
 try
 {

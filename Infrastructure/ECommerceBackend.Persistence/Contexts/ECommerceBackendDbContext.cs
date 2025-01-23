@@ -2,13 +2,15 @@ using System;
 using ECommerceBackend.Domain.Entities;
 using ECommerceBackend.Domain.Entities.Common;
 using ECommerceBackend.Persistence.Config;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ECommerceBackend.Persistence.Contexts;
 
-public class ECommerceBackendDbContext(DbContextOptions options) : DbContext(options)
+public class ECommerceBackendDbContext(DbContextOptions options) : IdentityDbContext<AppUser>(options)
 {
   public DbSet<Product> Products { get; set; }
+  public DbSet<Address> Addresses { get; set; }
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
