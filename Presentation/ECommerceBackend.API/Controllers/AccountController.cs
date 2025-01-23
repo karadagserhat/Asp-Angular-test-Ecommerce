@@ -1,4 +1,5 @@
 using ECommerceBackend.Application.DTOs;
+using ECommerceBackend.Application.Exceptions;
 using ECommerceBackend.Application.Features.Commands.Account.CreateOrUpdateAddress;
 using ECommerceBackend.Application.Features.Commands.Account.LogoutUser;
 using ECommerceBackend.Application.Features.Commands.Account.RegisterUser;
@@ -39,7 +40,7 @@ namespace ECommerceBackend.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet]
+        [HttpGet("auth-status")]
         public async Task<ActionResult> GetAuthState()
         {
             GetAuthStateQueryResponse response = await _mediator.Send(new GetAuthStateQueryRequest());

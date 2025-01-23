@@ -1,4 +1,5 @@
 using ECommerceAPI.Infrastructure;
+using ECommerceBackend.API.Extensions;
 using ECommerceBackend.Application;
 using ECommerceBackend.Domain.Entities;
 using ECommerceBackend.Persistence;
@@ -20,10 +21,19 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
 builder.Services.AddControllers();
 
 builder.Services.AddAuthorization();
-builder.Services.AddIdentityApiEndpoints<AppUser>()
+builder.Services.AddIdentityApiEndpoints<AppUser>(options =>
+            {
+              options.Password.RequiredLength = 3;
+              options.Password.RequireNonAlphanumeric = false;
+              options.Password.RequireDigit = false;
+              options.Password.RequireLowercase = false;
+              options.Password.RequireUppercase = false;
+            })
     .AddEntityFrameworkStores<ECommerceBackendDbContext>();
 
 var app = builder.Build();
+
+app.ConfigureExceptionHandler();
 
 // Configure the HTTP request pipeline.
 app.UseCors();

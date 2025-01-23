@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ECommerceBackend.Application.Abstractions.Services;
 using ECommerceBackend.Application.DTOs;
+using ECommerceBackend.Application.Exceptions;
 using ECommerceBackend.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -26,6 +27,11 @@ namespace ECommerceBackend.Application.Features.Commands.Account.RegisterUser
             };
 
             var result = await _accountService.RegisterUserAsync(registerDto);
+
+            if (!result.Succeeded)
+            {
+                throw new AuthenticationErrorException(result.Message);
+            }
 
             return new()
             {

@@ -16,6 +16,10 @@ namespace ECommerceBackend.Application.Features.Queries.Account.GetUserInfo
         {
             var account = await _accountService.GetUserInfoAsync();
 
+            if (account == null)
+            {
+                return null!;
+            }
 
             return new GetUserInfoQueryResponse
             {

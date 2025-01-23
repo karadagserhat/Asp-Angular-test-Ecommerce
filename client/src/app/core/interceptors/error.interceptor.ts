@@ -23,7 +23,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
           }
           throw modelStateErrors.flat();
         } else {
-          snackbar.error(err.error.title || err.error);
+          snackbar.error(err.error.title || err.error || err.error.Title);
         }
       }
       if (err.status === 401) {
