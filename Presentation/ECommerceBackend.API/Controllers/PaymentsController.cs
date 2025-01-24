@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ECommerceBackend.Application.Features.Commands.Payment.CreateOrUpdatePaymentIntent;
 using MediatR;
-using ECommerceBackend.Application.Features.Queries.Payment.GetDeliveryMethods;
 using ECommerceBackend.Application.DTOs;
 
 namespace ECommerceBackend.API.Controllers
@@ -23,13 +22,6 @@ namespace ECommerceBackend.API.Controllers
         public async Task<ActionResult<ShoppingCart>> CreateOrUpdatePaymentIntent([FromRoute] CreateOrUpdatePaymentIntentCommandRequest createOrUpdatePaymentIntentCommandRequest)
         {
             CreateOrUpdatePaymentIntentCommandResponse response = await _mediator.Send(createOrUpdatePaymentIntentCommandRequest);
-            return Ok(response);
-        }
-
-        [HttpGet("delivery-methods")]
-        public async Task<ActionResult<IReadOnlyList<DeliveryMethod>>> GetDeliveryMethods()
-        {
-            List<DeliveryMethodDto> response = await _mediator.Send(new GetDeliveryMethodsQueryRequest());
             return Ok(response);
         }
     }

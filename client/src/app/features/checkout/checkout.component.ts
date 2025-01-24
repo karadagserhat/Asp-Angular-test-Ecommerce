@@ -20,7 +20,6 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { Address } from '../../shared/models/user';
 import { firstValueFrom } from 'rxjs';
 import { AccountService } from '../../core/services/account.service';
-import { CheckoutDeliveryComponent } from './checkout-delivery/checkout-delivery.component';
 import { CheckoutReviewComponent } from './checkout-review/checkout-review.component';
 import { CartService } from '../../core/services/cart.service';
 import { CurrencyPipe, JsonPipe } from '@angular/common';
@@ -35,7 +34,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatButton,
     RouterLink,
     MatCheckboxModule,
-    CheckoutDeliveryComponent,
     CheckoutReviewComponent,
     CurrencyPipe,
     JsonPipe,
@@ -56,8 +54,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   completionStatus = signal<{
     address: boolean;
     card: boolean;
-    delivery: boolean;
-  }>({ address: false, card: false, delivery: false });
+  }>({ address: false, card: false });
   confirmationToken?: ConfirmationToken;
   loading = false;
 
@@ -89,13 +86,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     });
   };
 
-  handleDeliveryChange(event: boolean) {
-    this.completionStatus.update((state) => {
-      state.delivery = event;
-      return state;
-    });
-  }
-
   async getConfirmationToken() {
     try {
       if (
@@ -122,9 +112,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
     if (event.selectedIndex === 2) {
       await firstValueFrom(this.stripeService.createOrUpdatePaymentIntent());
+      await this.getConfirmationToken();
     }
     if (event.selectedIndex === 3) {
-      await this.getConfirmationToken();
     }
   }
 
@@ -139,7 +129,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           throw new Error(result.error.message);
         } else {
           this.cartService.deleteCart();
-          this.cartService.selectedDelivery.set(null);
           this.router.navigateByUrl('/checkout/success');
         }
       }

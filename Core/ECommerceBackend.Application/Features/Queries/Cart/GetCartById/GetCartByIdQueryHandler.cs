@@ -37,7 +37,6 @@ namespace ECommerceBackend.Application.Features.Queries.Cart.GetCartById
                 }).ToList(),
                 ClientSecret = cart.ClientSecret,
                 PaymentIntentId = cart.PaymentIntentId,
-                DeliveryMethodId = cart.DeliveryMethodId,
             };
         }
     }

@@ -18,7 +18,6 @@ namespace ECommerceBackend.Application.Features.Commands.Payment.CreateOrUpdateP
             {
                 Id = cart.Id,
                 Items = cart.Items,
-                DeliveryMethodId = cart.DeliveryMethodId,
                 ClientSecret = cart.ClientSecret,
                 PaymentIntentId = cart.PaymentIntentId
             };

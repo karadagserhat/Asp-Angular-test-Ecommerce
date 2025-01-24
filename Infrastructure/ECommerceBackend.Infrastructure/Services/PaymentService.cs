@@ -10,7 +10,7 @@ using Stripe;
 
 namespace ECommerceBackend.Infrastructure.Services
 {
-    public class PaymentService(IConfiguration config, ICartService cartService, IProductReadRepository productReadRepository, IDeliveryMethodReadRepository deliveryMethodReadRepository) : IPaymentService
+    public class PaymentService(IConfiguration config, ICartService cartService, IProductReadRepository productReadRepository) : IPaymentService
     {
         public async Task<ShoppingCart?> CreateOrUpdatePaymentIntent(string cartId)
         {
@@ -21,13 +21,6 @@ namespace ECommerceBackend.Infrastructure.Services
             if (cart == null) return null;
 
             var shippingPrice = 0m;
-
-            if (cart.DeliveryMethodId.HasValue)
-            {
-                var deliveryMethod = await deliveryMethodReadRepository.GetByIdAsync((int)cart.DeliveryMethodId);
-                if (deliveryMethod == null) return null;
-                shippingPrice = deliveryMethod.Price;
-            }
 
             foreach (var item in cart.Items)
             {
