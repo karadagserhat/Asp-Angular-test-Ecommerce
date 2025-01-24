@@ -16,6 +16,8 @@ public static class ServiceRegistration
 
     services.AddScoped<IProductReadRepository, ProductReadRepository>();
     services.AddScoped<IProductWriteRepository, ProductWriteRepository>();
+    services.AddScoped<IDeliveryMethodReadRepository, DeliveryMethodReadRepository>();
+    services.AddScoped<IDeliveryMethodWriteRepository, DeliveryMethodWriteRepository>();
     services.AddScoped<IAccountService, AccountService>();
 
     services.AddHttpContextAccessor();

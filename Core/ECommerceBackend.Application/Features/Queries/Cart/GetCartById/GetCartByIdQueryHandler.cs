@@ -34,7 +34,10 @@ namespace ECommerceBackend.Application.Features.Queries.Cart.GetCartById
                     PictureUrl = item.PictureUrl,
                     Brand = item.Brand,
                     Type = item.Type
-                }).ToList()
+                }).ToList(),
+                ClientSecret = cart.ClientSecret,
+                PaymentIntentId = cart.PaymentIntentId,
+                DeliveryMethodId = cart.DeliveryMethodId,
             };
         }
     }

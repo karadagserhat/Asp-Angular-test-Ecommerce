@@ -31,12 +31,14 @@
         </dd>
       </dl>
     </div>
+    @if (location.path() !== '/checkout') {
     <div class="flex flex-col gap-2">
-      <button routerLink="/checkout" mat-flat-button color="primary">
+      <button routerLink="/checkout" color="primary" mat-flat-button>
         Checkout
       </button>
-      <button routerLink="/shop" mat-stroked-button>Continue Shopping</button>
+      <button routerLink="/shop" mat-button>Continue Shopping</button>
     </div>
+    }
   </div>
   <div class="space-y-4 rounded-lg border border-gray-200 shadow-sm">
     <form class="space-y-2 flex flex-col p-2">

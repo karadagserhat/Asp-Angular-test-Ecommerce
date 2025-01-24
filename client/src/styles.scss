@@ -74,6 +74,7 @@ $darkTheme: mat.m2-define-dark-theme(
   mat-card,
   mat-card-content,
   mat-card-actions,
+  mat-stepper,
   mat-form-field .mat-input-element {
     background-color: mat.m2-get-color-from-palette(
       $light-background,
@@ -111,6 +112,7 @@ $darkTheme: mat.m2-define-dark-theme(
   mat-card,
   mat-card-content,
   mat-card-actions,
+  mat-stepper,
   mat-form-field .mat-input-element {
     background-color: mat.m2-get-color-from-palette(
       $dark-background,
@@ -161,4 +163,8 @@ button.match-input-height {
   --mdc-snackbar-container-color: green;
   --mat-snack-bar-button-color: #fff;
   --mdc-snackbar-supporting-text-color: #fff;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }

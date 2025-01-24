@@ -18,7 +18,10 @@ namespace ECommerceBackend.Application.Features.Queries.Cart.UpdateCart
             var shoppingCart = new ShoppingCart
             {
                 Id = request.Id,
-                Items = request.Items
+                Items = request.Items,
+                ClientSecret = request.ClientSecret,
+                PaymentIntentId = request.PaymentIntentId,
+                DeliveryMethodId = request.DeliveryMethodId,
             };
 
             var updatedCart = await _cartService.SetCartAsync(shoppingCart) ?? throw new CartUpdateFailedException("Problem with cart");
@@ -35,7 +38,10 @@ namespace ECommerceBackend.Application.Features.Queries.Cart.UpdateCart
                     PictureUrl = item.PictureUrl,
                     Brand = item.Brand,
                     Type = item.Type
-                }).ToList()
+                }).ToList(),
+                ClientSecret = updatedCart.ClientSecret,
+                PaymentIntentId = updatedCart.PaymentIntentId,
+                DeliveryMethodId = updatedCart.DeliveryMethodId,
             };
         }
     }

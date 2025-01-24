@@ -19,6 +19,7 @@ namespace ECommerceAPI.Infrastructure
             });
 
             services.AddSingleton<ICartService, CartService>();
+            services.AddScoped<IPaymentService, PaymentService>();
         }
     }
 }
