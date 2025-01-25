@@ -59,7 +59,8 @@ namespace ECommerceBackend.Persistence.Services
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
-                Address = user.Address
+                Address = user.Address,
+                Roles = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role)
             };
         }
 

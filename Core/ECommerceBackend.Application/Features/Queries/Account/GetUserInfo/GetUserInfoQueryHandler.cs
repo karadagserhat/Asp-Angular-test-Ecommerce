@@ -26,7 +26,8 @@ namespace ECommerceBackend.Application.Features.Queries.Account.GetUserInfo
                 FirstName = account.FirstName,
                 LastName = account.LastName,
                 Email = account.Email,
-                Address = account.Address
+                Address = account.Address,
+                Roles = account.Roles
             };
         }
     }

@@ -7,6 +7,7 @@ using ECommerceBackend.Persistence;
 using ECommerceBackend.Persistence.Contexts;
 using ECommerceBackend.Persistence.Services;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,6 +37,7 @@ builder.Services.AddIdentityApiEndpoints<AppUser>(options =>
               options.Password.RequireLowercase = false;
               options.Password.RequireUppercase = false;
             })
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ECommerceBackendDbContext>();
 
 var app = builder.Build();
@@ -55,8 +57,9 @@ try
   using var scope = app.Services.CreateScope();
   var services = scope.ServiceProvider;
   var context = services.GetRequiredService<ECommerceBackendDbContext>();
+  var userManager = services.GetRequiredService<UserManager<AppUser>>();
   await context.Database.MigrateAsync();
-  await StoreContextSeed.SeedAsync(context);
+  await StoreContextSeed.SeedAsync(context, userManager);
 }
 catch (Exception ex)
 {

@@ -51,9 +51,11 @@ export class ShopComponent {
   }
 
   initialiseShop() {
-    this.shopService.getTypes();
-    this.shopService.getBrands();
     this.getProducts();
+    setTimeout(() => {
+      this.shopService.getTypes();
+      this.shopService.getBrands();
+    });
   }
   getProducts() {
     this.shopService.getProducts(this.shopParams).subscribe({
