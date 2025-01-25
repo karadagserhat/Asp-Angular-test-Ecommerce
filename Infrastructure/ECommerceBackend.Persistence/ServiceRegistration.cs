@@ -5,6 +5,8 @@ using ECommerceBackend.Application.Repositories;
 using ECommerceBackend.Persistence.Repositories;
 using ECommerceBackend.Application.Abstractions.Services;
 using ECommerceBackend.Persistence.Services;
+using ECommerceBackend.Application.Repositories.Product;
+using ECommerceBackend.Persistence.Repositories.Product;
 
 namespace ECommerceBackend.Persistence;
 
@@ -14,8 +16,7 @@ public static class ServiceRegistration
   {
     services.AddDbContext<ECommerceBackendDbContext>(opt => opt.UseSqlServer(Configuration.ConnectionString));
 
-    services.AddScoped<IProductReadRepository, ProductReadRepository>();
-    services.AddScoped<IProductWriteRepository, ProductWriteRepository>();
+    services.AddScoped<IProductRepository, ProductRepository>();
     services.AddScoped<IAccountService, AccountService>();
 
     services.AddHttpContextAccessor();

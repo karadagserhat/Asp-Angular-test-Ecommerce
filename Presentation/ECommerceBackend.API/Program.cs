@@ -1,9 +1,11 @@
 using ECommerceAPI.Infrastructure;
 using ECommerceBackend.API.Extensions;
 using ECommerceBackend.Application;
+using ECommerceBackend.Application.Abstractions.Services;
 using ECommerceBackend.Domain.Entities;
 using ECommerceBackend.Persistence;
 using ECommerceBackend.Persistence.Contexts;
+using ECommerceBackend.Persistence.Services;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddPersistenceServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
     policy.WithOrigins("http://localhost:4200", "https://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowCredentials()

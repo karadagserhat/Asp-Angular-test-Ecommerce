@@ -4,14 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using ECommerceBackend.Application.Abstractions.Services;
 using ECommerceBackend.Application.Repositories;
+using ECommerceBackend.Application.Repositories.Product;
 using ECommerceBackend.Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using Stripe;
 
 namespace ECommerceBackend.Infrastructure.Services
 {
-    public class PaymentService(IConfiguration config, ICartService cartService, IProductReadRepository productReadRepository) : IPaymentService
+    public class PaymentService(IConfiguration config, ICartService cartService, IUnitOfWork unitOfWork) : IPaymentService
     {
+        readonly IUnitOfWork _unitOfWork = unitOfWork;
+
         public async Task<ShoppingCart?> CreateOrUpdatePaymentIntent(string cartId)
         {
             StripeConfiguration.ApiKey = config["StripeSettings:SecretKey"];
@@ -24,7 +27,7 @@ namespace ECommerceBackend.Infrastructure.Services
 
             foreach (var item in cart.Items)
             {
-                var productItem = await productReadRepository.GetByIdAsync(item.ProductId);
+                var productItem = await _unitOfWork.Repository<Domain.Entities.Product>().GetByIdAsync(item.ProductId);
                 if (productItem == null) return null;
                 if (item.Price != productItem.Price)
                 {

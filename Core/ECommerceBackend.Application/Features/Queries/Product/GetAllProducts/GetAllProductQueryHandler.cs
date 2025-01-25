@@ -1,18 +1,21 @@
 ﻿using System.Runtime.CompilerServices;
+using ECommerceBackend.Application.Abstractions.Services;
 using ECommerceBackend.Application.Repositories;
+using ECommerceBackend.Application.Repositories.Product;
+using ECommerceBackend.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace ECommerceBackend.Application.Features.Queries.Product.GetAllProducts
 {
-    public class GetAllProductQueryHandler(IProductReadRepository productReadRepository) : IRequestHandler<GetAllProductQueryRequest, GetAllProductQueryResponse>
+    public class GetAllProductQueryHandler(IUnitOfWork unitOfWork) : IRequestHandler<GetAllProductQueryRequest, GetAllProductQueryResponse>
     {
-        readonly IProductReadRepository _productReadRepository = productReadRepository;
+        readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task<GetAllProductQueryResponse> Handle(GetAllProductQueryRequest request, CancellationToken cancellationToken)
         {
-            var query = _productReadRepository.GetAll().AsQueryable();
+            var query = _unitOfWork.Repository<Domain.Entities.Product>().GetAll().AsQueryable();
 
             if (!string.IsNullOrEmpty(request.Search))
                 query = query.Where(x => x.Name.Contains(request.Search));
