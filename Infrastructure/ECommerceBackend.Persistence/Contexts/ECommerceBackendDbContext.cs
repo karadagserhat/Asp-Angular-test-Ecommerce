@@ -11,6 +11,7 @@ public class ECommerceBackendDbContext(DbContextOptions options) : IdentityDbCon
 {
   public DbSet<Product> Products { get; set; }
   public DbSet<Address> Addresses { get; set; }
+  public DbSet<Photo> Photos { get; set; }
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {

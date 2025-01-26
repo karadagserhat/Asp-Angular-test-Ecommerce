@@ -3,6 +3,7 @@ using ECommerceBackend.API.Extensions;
 using ECommerceBackend.Application;
 using ECommerceBackend.Application.Abstractions.Services;
 using ECommerceBackend.Domain.Entities;
+using ECommerceBackend.Infrastructure.Helpers;
 using ECommerceBackend.Persistence;
 using ECommerceBackend.Persistence.Contexts;
 using ECommerceBackend.Persistence.Services;
@@ -17,6 +18,7 @@ builder.Services.AddPersistenceServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
     policy.WithOrigins("http://localhost:4200", "https://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowCredentials()

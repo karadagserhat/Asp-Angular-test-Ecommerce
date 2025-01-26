@@ -1,3 +1,5 @@
+using ECommerceBackend.Application.DTOs;
+using ECommerceBackend.Application.Features.Commands.Product.AddPhoto;
 using ECommerceBackend.Application.Features.Commands.Product.CreateProduct;
 using ECommerceBackend.Application.Features.Commands.Product.RemoveProduct;
 using ECommerceBackend.Application.Features.Commands.Product.UpdateProduct;
@@ -84,5 +86,13 @@ public class ProductsController(IMediator mediator) : ControllerBase
     return Ok(response);
   }
 
-
+  [Authorize(Roles = "Admin")]
+  [HttpPost("add-photo")]
+  public async Task<ActionResult<PhotoDTO>> AddPhoto([FromQuery] AddPhotoCommandRequest addPhotoCommandRequest)
+  {
+    addPhotoCommandRequest.File = Request.Form.Files[0];
+    AddPhotoCommandResponse response = await _mediator.Send(addPhotoCommandRequest);
+    return Ok(response);
+  }
 }
+

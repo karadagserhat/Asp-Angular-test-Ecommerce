@@ -4,6 +4,7 @@ using ECommerceBackend.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerceBackend.Persistence.Migrations
 {
     [DbContext(typeof(ECommerceBackendDbContext))]
-    partial class ECommerceBackendDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250126052125_mig_10")]
+    partial class mig_10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -242,13 +245,13 @@ namespace ECommerceBackend.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f5223c96-2096-40f6-9eda-63d7406b8888",
+                            Id = "56dcf1be-e86c-4577-9352-71b72b62492c",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "c1aad5c8-8bd6-449b-9e0e-2f87b879e4e6",
+                            Id = "f7cb4a5a-488d-468a-8bc3-6bd6e51a2642",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -372,7 +375,7 @@ namespace ECommerceBackend.Persistence.Migrations
             modelBuilder.Entity("ECommerceBackend.Domain.Entities.Photo", b =>
                 {
                     b.HasOne("ECommerceBackend.Domain.Entities.Product", "Product")
-                        .WithMany()
+                        .WithMany("Photos")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -429,6 +432,11 @@ namespace ECommerceBackend.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ECommerceBackend.Domain.Entities.Product", b =>
+                {
+                    b.Navigation("Photos");
                 });
 #pragma warning restore 612, 618
         }

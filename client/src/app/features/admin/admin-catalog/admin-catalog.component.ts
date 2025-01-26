@@ -12,6 +12,7 @@ import { firstValueFrom } from 'rxjs';
 import { DialogService } from '../../../core/services/dialog.service';
 import { Router } from '@angular/router';
 import { UpdateQuantityComponent } from '../update-quantity/update-quantity.component';
+import { ProductPhotoComponent } from '../product-photo/product-photo.component';
 
 @Component({
   selector: 'app-admin-catalog',
@@ -63,6 +64,14 @@ export class AdminCatalogComponent {
       tooltip: 'Update quantity in stock',
       action: (row: any) => {
         this.openQuantityDialog(row);
+      },
+    },
+    {
+      label: 'Add photo',
+      icon: 'upload',
+      tooltip: 'Add photo product',
+      action: (row: any) => {
+        this.openAddPhotoDialog(row);
       },
     },
     {
@@ -140,6 +149,16 @@ export class AdminCatalogComponent {
     });
   }
 
+  openAddPhotoDialog(product: Product) {
+    const dialog = this.dialog.open(ProductPhotoComponent, {
+      minWidth: '500px',
+      data: {
+        title: 'Add photo product',
+        product,
+      },
+    });
+  }
+
   async openConfirmDialog(id: number) {
     const confirmed = await this.dialogService.confirm(
       'Confirm delete product',
@@ -167,7 +186,6 @@ export class AdminCatalogComponent {
     dialog.afterClosed().subscribe({
       next: async (result) => {
         if (result) {
-          console.log(result);
           await firstValueFrom(
             this.adminService.updateStock(product.id, result.updatedQuantity)
           );

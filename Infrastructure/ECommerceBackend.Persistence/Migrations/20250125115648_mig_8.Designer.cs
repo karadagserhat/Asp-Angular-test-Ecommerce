@@ -4,6 +4,7 @@ using ECommerceBackend.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerceBackend.Persistence.Migrations
 {
     [DbContext(typeof(ECommerceBackendDbContext))]
-    partial class ECommerceBackendDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250125115648_mig_8")]
+    partial class mig_8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,6 +151,9 @@ namespace ECommerceBackend.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsMain")
                         .HasColumnType("bit");
 
@@ -242,13 +248,13 @@ namespace ECommerceBackend.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f5223c96-2096-40f6-9eda-63d7406b8888",
+                            Id = "462cc1d4-9c1f-440f-b588-bc6896f5f105",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "c1aad5c8-8bd6-449b-9e0e-2f87b879e4e6",
+                            Id = "dd6d6f0d-a5d9-4c97-b1f6-32fa65acc01c",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -372,7 +378,7 @@ namespace ECommerceBackend.Persistence.Migrations
             modelBuilder.Entity("ECommerceBackend.Domain.Entities.Photo", b =>
                 {
                     b.HasOne("ECommerceBackend.Domain.Entities.Product", "Product")
-                        .WithMany()
+                        .WithMany("Photos")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -429,6 +435,11 @@ namespace ECommerceBackend.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ECommerceBackend.Domain.Entities.Product", b =>
+                {
+                    b.Navigation("Photos");
                 });
 #pragma warning restore 612, 618
         }

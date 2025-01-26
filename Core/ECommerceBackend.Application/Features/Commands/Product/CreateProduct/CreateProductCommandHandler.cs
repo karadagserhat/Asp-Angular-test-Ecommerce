@@ -11,7 +11,9 @@ namespace ECommerceBackend.Application.Features.Commands.Product.CreateProduct
 
         public async Task<CreateProductCommandResponse> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
         {
-            await _unitOfWork.Repository<Domain.Entities.Product>().AddAsync(new()
+
+
+            var product = new Domain.Entities.Product
             {
                 Name = request.Name,
                 Price = request.Price,
@@ -20,7 +22,10 @@ namespace ECommerceBackend.Application.Features.Commands.Product.CreateProduct
                 Brand = request.Brand,
                 QuantityInStock = request.QuantityInStock,
                 Description = request.Description
-            });
+            };
+
+            await _unitOfWork.Repository<Domain.Entities.Product>().AddAsync(product);
+
 
             await _unitOfWork.Complete();
 
@@ -33,6 +38,7 @@ namespace ECommerceBackend.Application.Features.Commands.Product.CreateProduct
                 Brand = request.Brand,
                 QuantityInStock = request.QuantityInStock,
                 Description = request.Description,
+                Id = product.Id
             };
         }
     }
