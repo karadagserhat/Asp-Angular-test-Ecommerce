@@ -31,7 +31,6 @@ public class ProductsController(IMediator mediator) : ControllerBase
     return Ok(response);
   }
 
-  [Cache(600)]
   [HttpGet("{id:int}")]
   public async Task<ActionResult<Product>> GetProduct([FromRoute] GetByIdProductQueryRequest getByIdProductQueryRequest)
   {
