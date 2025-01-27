@@ -8,7 +8,7 @@ namespace ECommerceBackend.API.Extensions
 {
     static public class ConfigureExceptionHandlerExtension
     {
-        public static void ConfigureExceptionHandler(this WebApplication application)
+        public static void ConfigureExceptionHandler<T>(this WebApplication application, ILogger<T> logger)
         {
             application.UseExceptionHandler(builder =>
             {
@@ -31,6 +31,8 @@ namespace ECommerceBackend.API.Extensions
                         }
 
                         context.Response.ContentType = MediaTypeNames.Application.Json;
+
+                        logger.LogError(contextFeature.Error.Message);
 
                         await context.Response.WriteAsync(JsonSerializer.Serialize(new
                         {

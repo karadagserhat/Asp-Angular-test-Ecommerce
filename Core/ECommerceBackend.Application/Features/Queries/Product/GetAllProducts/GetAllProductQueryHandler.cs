@@ -9,12 +9,16 @@ using Microsoft.Extensions.Logging;
 
 namespace ECommerceBackend.Application.Features.Queries.Product.GetAllProducts
 {
-    public class GetAllProductQueryHandler(IUnitOfWork unitOfWork) : IRequestHandler<GetAllProductQueryRequest, GetAllProductQueryResponse>
+    public class GetAllProductQueryHandler(IUnitOfWork unitOfWork, ILogger<GetAllProductQueryHandler> logger) : IRequestHandler<GetAllProductQueryRequest, GetAllProductQueryResponse>
     {
         readonly IUnitOfWork _unitOfWork = unitOfWork;
+        readonly ILogger<GetAllProductQueryHandler> _logger = logger;
+
 
         public async Task<GetAllProductQueryResponse> Handle(GetAllProductQueryRequest request, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("Get all products");
+
             var query = _unitOfWork.Repository<Domain.Entities.Product>().GetAll().AsQueryable();
 
             if (!string.IsNullOrEmpty(request.Search))
