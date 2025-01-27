@@ -19,6 +19,17 @@ public class StoreContextSeed
       await userManager.AddToRoleAsync(user, "Admin");
     }
 
+    if (!userManager.Users.Any(x => x.UserName == "admin2@test.com"))
+    {
+      var user = new AppUser
+      {
+        UserName = "admin2@test.com",
+        Email = "admin2@test.com",
+      };
+      await userManager.CreateAsync(user, "Pa$$w0rd");
+      await userManager.AddToRoleAsync(user, "Admin");
+    }
+
     if (!context.Products.Any())
     {
       var productsData = await File.ReadAllTextAsync("../ECommerceBackend.API/SeedData/products.json");

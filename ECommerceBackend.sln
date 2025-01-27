@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceBackend.Applicatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceBackend.Domain", "Core\ECommerceBackend.Domain\ECommerceBackend.Domain.csproj", "{645FA0CE-235E-4AF4-A06C-137CC40B56C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerceBackend.SignalR", "Infrastructure\ECommerceBackend.SignalR\ECommerceBackend.SignalR.csproj", "{D0D43861-2EEB-4A38-902C-AE6F38BFA7BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{645FA0CE-235E-4AF4-A06C-137CC40B56C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{645FA0CE-235E-4AF4-A06C-137CC40B56C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{645FA0CE-235E-4AF4-A06C-137CC40B56C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0D43861-2EEB-4A38-902C-AE6F38BFA7BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0D43861-2EEB-4A38-902C-AE6F38BFA7BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0D43861-2EEB-4A38-902C-AE6F38BFA7BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0D43861-2EEB-4A38-902C-AE6F38BFA7BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B8FE6397-2072-45CF-B13D-CDC711C6776A} = {05268C5C-2195-45FA-B7AE-2CC3AF06A050}
@@ -55,5 +61,6 @@ Global
 		{A423C0E0-F125-4C73-B899-2E789C63B494} = {B681CAC3-B228-401B-9CBB-E5AF32DC3401}
 		{A0829558-834E-4631-8717-B31C758AA2C1} = {0C6B3931-BD83-46FB-97E5-5AAAD4B7F687}
 		{645FA0CE-235E-4AF4-A06C-137CC40B56C7} = {0C6B3931-BD83-46FB-97E5-5AAAD4B7F687}
+		{D0D43861-2EEB-4A38-902C-AE6F38BFA7BA} = {B681CAC3-B228-401B-9CBB-E5AF32DC3401}
 	EndGlobalSection
 EndGlobal

@@ -9,6 +9,7 @@ using ECommerceBackend.Infrastructure.Helpers;
 using ECommerceBackend.Persistence;
 using ECommerceBackend.Persistence.Contexts;
 using ECommerceBackend.Persistence.Services;
+using ECommerceBackend.SignalR;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.Identity;
@@ -25,6 +26,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddPersistenceServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
+builder.Services.AddSignalRServices();
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 
@@ -124,6 +127,8 @@ app.Use(async (context, next) =>
 
 app.MapControllers();
 app.MapGroup("api").MapIdentityApi<AppUser>(); // api/login
+
+app.MapHubs();
 
 try
 {

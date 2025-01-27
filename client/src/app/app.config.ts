@@ -37,5 +37,10 @@ export const appConfig: ApplicationConfig = {
       multi: true,
       deps: [InitService],
     },
+    {
+      provide: 'baseSignalRUrl',
+      useValue: 'https://localhost:5001/',
+      multi: true,
+    },
   ],
 };

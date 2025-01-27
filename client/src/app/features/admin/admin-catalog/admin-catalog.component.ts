@@ -13,6 +13,8 @@ import { DialogService } from '../../../core/services/dialog.service';
 import { Router } from '@angular/router';
 import { UpdateQuantityComponent } from '../update-quantity/update-quantity.component';
 import { ProductPhotoComponent } from '../product-photo/product-photo.component';
+import { SnackbarService } from '../../../core/services/snackbar.service';
+import { AccountService } from '../../../core/services/account.service';
 
 @Component({
   selector: 'app-admin-catalog',
@@ -26,8 +28,11 @@ export class AdminCatalogComponent {
   private shopService = inject(ShopService);
   private dialog = inject(MatDialog);
   private adminService = inject(AdminService);
+  private snackbarService = inject(SnackbarService);
   private dialogService = inject(DialogService);
   private router = inject(Router);
+  accountService = inject(AccountService);
+  account: any;
 
   productParams = new ShopParams();
   totalItems = 0;
@@ -86,6 +91,10 @@ export class AdminCatalogComponent {
 
   ngOnInit(): void {
     this.loadProducts();
+
+    this.accountService.getUserInfo().subscribe((account) => {
+      this.account = account;
+    });
   }
 
   loadProducts() {
@@ -115,9 +124,12 @@ export class AdminCatalogComponent {
     dialog.afterClosed().subscribe({
       next: async (result) => {
         if (result) {
+          result.product.userEmail = this.account.email;
           const product = await firstValueFrom(
             this.adminService.createProduct(result.product)
           );
+          this.snackbarService.success('Product Created!');
+
           if (product) {
             this.products.push(product);
           }
