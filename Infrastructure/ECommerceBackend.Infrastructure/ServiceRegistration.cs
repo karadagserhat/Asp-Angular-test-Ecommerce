@@ -4,7 +4,7 @@ using ECommerceBackend.Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 
-namespace ECommerceAPI.Infrastructure
+namespace ECommerceBackend.Infrastructure
 {
     public static class ServiceRegistration
     {
@@ -21,6 +21,7 @@ namespace ECommerceAPI.Infrastructure
             services.AddSingleton<ICartService, CartService>();
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IPhotoService, PhotoService>();
+            services.AddScoped<IMailService, MailService>();
             services.AddSingleton<IResponseCacheService, ResponseCacheService>();
         }
     }

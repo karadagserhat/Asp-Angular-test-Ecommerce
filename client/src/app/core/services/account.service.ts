@@ -2,7 +2,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Address, User } from '../../shared/models/user';
-import { map, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -48,5 +48,30 @@ export class AccountService {
     return this.http.get<{ isAuthenticated: boolean }>(
       this.baseUrl + 'account/auth-status'
     );
+  }
+
+  passwordReset(email: string) {
+    return this.http.post(this.baseUrl + 'account/password-reset', { email });
+  }
+
+  verifyResetToken(resetToken: string, userId: string) {
+    return this.http.post(this.baseUrl + 'account/verify-reset-token', {
+      resetToken,
+      userId,
+    });
+  }
+
+  updatePassword(
+    userId: string,
+    resetToken: string,
+    password: string,
+    passwordConfirm: string
+  ) {
+    return this.http.post(this.baseUrl + 'account/update-password', {
+      resetToken,
+      userId,
+      password,
+      passwordConfirm,
+    });
   }
 }

@@ -1,5 +1,5 @@
 using System.Collections.ObjectModel;
-using ECommerceAPI.Infrastructure;
+using ECommerceBackend.Infrastructure;
 using ECommerceBackend.API.Configurations.ColumnWriters;
 using ECommerceBackend.API.Extensions;
 using ECommerceBackend.Application;
@@ -99,7 +99,8 @@ builder.Services.AddIdentityApiEndpoints<AppUser>(options =>
               options.Password.RequireUppercase = false;
             })
     .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<ECommerceBackendDbContext>();
+    .AddEntityFrameworkStores<ECommerceBackendDbContext>()
+    .AddDefaultTokenProviders();
 
 var app = builder.Build();
 
